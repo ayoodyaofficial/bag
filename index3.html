@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ayoodya bag</title>
+    <link rel="icon" href="Untitled_design_1_-removebg-preview.png" type="image/png">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+        .fade-in.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .slide-left {
+            opacity: 0;
+            transform: translateX(-50px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+        .slide-left.show {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .slide-right {
+            opacity: 0;
+            transform: translateX(50px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+        .slide-right.show {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .scale-in {
+            opacity: 0;
+            transform: scale(0.9);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .scale-in.show {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .stagger-1 { transition-delay: 0.1s; }
+        .stagger-2 { transition-delay: 0.2s; }
+        .stagger-3 { transition-delay: 0.3s; }
+        .stagger-4 { transition-delay: 0.4s; }
+        .stagger-5 { transition-delay: 0.5s; }
+
+        header {
+            background: rgba(76, 175, 80, 0.9);
+            backdrop-filter: blur(10px);
+            color: white;
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo img {
+            width: 40px;
+            height: 40px;
+            object-fit: cover;
+            border-radius: 5px;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            transition: opacity 0.3s;
+        }
+
+        .nav-links a:hover {
+            opacity: 0.8;
+        }
+
+        .hero {
+            background: linear-gradient(rgba(76, 175, 79, 0.329), rgba(129, 199, 132, 0.404)), url('heading.png') center/cover no-repeat;
+            background-attachment: scroll;
+            color: white;
+            padding: 150px 2rem 150px;
+            text-align: center;
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.3);
+            z-index: 0;
+        }
+
+        .hero h2, .hero p, .hero .btn {
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero h2 {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            color: white;
+        }
+
+        .hero > p {
+            font-size: 1.2rem;
+            margin-bottom: 3rem;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background: #25D366;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: transform 0.3s, background 0.3s;
+            margin-bottom: 3rem;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            background: #20BA5A;
+        }
+
+        .hero-info {
+            background: white;
+            color: #333;
+            padding: 2.5rem;
+            border-radius: 15px;
+            max-width: 900px;
+            margin: 0 auto;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-info h3 {
+            color: #4CAF50;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .hero-info p {
+            color: #555;
+            line-height: 1.8;
+            margin-bottom: 0;
+            text-shadow: none;
+            text-align: center;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 80px 2rem;
+        }
+
+        section {
+            margin-bottom: 60px;
+        }
+
+        h2 {
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 3rem;
+            color: #333;
+        }
+
+        h3 {
+            color: #4CAF50;
+        }
+
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .about-img {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+            border-radius: 10px;
+        }
+
+        .info-bar {
+            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('bg.png') center/cover no-repeat;
+            padding: 80px 2rem;
+            margin-top: 60px;
+            position: relative
+        }
+
+        .info-bar-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            align-items: center;
+        }
+
+        .info-box {
+            background: white;
+            padding: 3rem;
+            border-radius: 15px;
+            max-width: 600px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            align-items: center;
+        }
+
+        .info-box h3 {
+            font-size: 2rem;
+            color: #4CAF50;
+            margin-bottom: 1.5rem;
+            align-items: center;
+            text-align: center;
+        }
+
+        .services {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .service-card {
+            background: #f8f8f8;
+            padding: 2rem;
+            border-radius: 10px;
+            text-align: center;
+            overflow: hidden;
+        }
+
+        .service-img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+        }
+
+        .service-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .testimonials {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .testimonial-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .testimonial-img {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin: 0 auto 1rem;
+            display: block;
+        }
+
+        .testimonial-card p {
+            font-style: italic;
+            margin-bottom: 1rem;
+        }
+
+        .contact-form {
+            max-width: 600px;
+            margin: 0 auto;
+            background: #f8f8f8;
+            text-align: center;
+            position: relative;
+            padding: 2rem;
+            border-radius: 10px;
+        }
+
+        footer {
+            background: #333;
+            color: white;
+            padding: 3rem 2rem 2rem;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h4 {
+            color: #4CAF50;
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-links a {
+            color: #ddd;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: #4CAF50;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            transition: background 0.3s, transform 0.3s;
+        }
+
+        .social-links a:hover {
+            background: #4CAF50;
+            transform: translateY(-3px);
+        }
+
+        .social-links svg {
+            width: 20px;
+            height: 20px;
+            fill: white;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .footer-bottom p {
+            margin: 0.5rem 0;
+        }
+
+        @media (max-width: 768px) {
+            .hero h2 {
+                font-size: 2rem;
+            }
+
+            .about-content {
+                grid-template-columns: 1fr;
+            }
+
+            .info-box {
+                max-width: 100%;
+            }
+
+            .info-box h3 {
+                font-size: 1.5rem;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .social-links {
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">
+                <img src="Untitled_design_1_-removebg-preview.png" alt="Ayoodya Logo">
+                Ayoodya_Official
+            </div>
+            <ul class="nav-links">
+                <li><a href="#beranda">Beranda</a></li>
+                <li><a href="#tentang">Tentang</a></li>
+                <li><a href="#layanan">Layanan</a></li>
+                <li><a href="#testimoni">Testimoni</a></li>
+                <li><a href="#kontak">Kontak</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section id="beranda" class="hero">
+        <h2 class="fade-in">Traditional But Make It Fashion. The Coolest Woven Bags Since the 90s."</h2>
+        <p>Tradisional tapi Tetap Modis. Tas Anyaman stylish Sejak Tahun 90-an.</p>
+        <a href="https://wa.me/6285649108190" target="_blank" class="btn fade-in stagger-3">
+            <svg style="width: 24px; height: 24px; vertical-align: middle; margin-right: 8px;" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+            </svg>
+            Hubungi Kami
+        </a>
+        
+        <div class="hero-info scale-in stagger-4">
+            <h3>Tas Anyaman Plastik Berkelanjutan</h3>
+            <p>Cerita budaya dalam setiap anyaman.</p>
+        </div>
+    </section>
+
+    <div class="container">
+        <section id="tentang">
+            <h2 class="fade-in">Tentang Kami</h2>
+            <div class="about-content">
+                <img src="about us.png" alt="Tentang Kami" class="about-img slide-left">
+                <div class="slide-right">
+                    <h3>About Us</h3>
+                    <p>Our woven plastic bags are more than just fashion items – they are stories of heritage, empowerment, and sustainability. Handcrafted by skilled village housewives, these bags provide meaningful work during times when stable jobs are not available. Each piece is carefully woven with unique shapes and beautiful patterns, making every bag one of a kind and timeless in style. This weaving tradition has been passed down from my grandmother since the 1990s and has stood strong for over 30 years. What you're holding is not just a bag, but a traditional craft with high cultural and economic value. By choosing our woven bags, you're also taking part in reducing plastic waste. These bags are made from recycled plastic and can be reused as a stylish alternative to single-use plastic bags – good for you, good for the planet. Wear it proudly. Use it daily. And be part of a movement that turns waste into worth.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="info-bar">
+            <div class="info-bar-content">
+                <div class="info-box slide-left">
+                    <h3>Why Choose Us?</h3>
+                </div>
+            </div>
+            <div class="services">
+                <div class="service-card scale-in stagger-1">
+                    <img src="Hight quality.jpg" alt="Custom Design" class="service-img">
+                    <h3>High Quality</h3>
+                    <p>Expertly woven with premium waterproof material that is tough, easy to clean, and built to last</p>
+                </div>
+                <div class="service-card scale-in stagger-2">
+                    <img src="Earth Friendly.png" alt="Pengiriman Cepat" class="service-img">
+                    <h3>Earth Friendly</h3>
+                    <p>Reusable and durable material.</p>
+                </div>
+                <div class="service-card scale-in stagger-3">
+                    <img src="uniq.jpg" alt="Garansi Kualitas" class="service-img">
+                    <h3>Unique Design</h3>
+                    <p>Stand out from the crowd.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="layanan">
+            <h2 class="fade-in">Layanan Kami</h2>
+            <div class="services">
+                <div class="service-card scale-in stagger-1">
+                    <img src="custom design.png" alt="Custom Design" class="service-img">
+                    <div class="service-icon">🎨</div>
+                    <h3>Custom Design</h3>
+                    <p>Kami menerima pesanan custom sesuai dengan desain dan ukuran yang Anda inginkan</p>
+                </div>
+                <div class="service-card scale-in stagger-2">
+                    <img src="https://images.unsplash.com/photo-1566576721346-d4a3b4eaeb55?w=600" alt="Pengiriman Cepat" class="service-img">
+                    <div class="service-icon">🚚</div>
+                    <h3>Pengiriman Aman</h3>
+                    <p>Pengiriman ke seluruh Indonesia dengan packaging aman dan rapi</p>
+                </div>
+                <div class="service-card scale-in stagger-3">
+                    <img src="QualityProduct.png" alt="Garansi Kualitas" class="service-img">
+                    <div class="service-icon">💯</div>
+                    <h3>Kontroling Produk</h3>
+                    <p>Memastikan kepuasan 100% dengan quality control di setiap produk</p>
+                </div>
+                <div class="service-card scale-in stagger-4">
+                    <img src="Grosir & reseler.png" alt="Grosir & Reseller" class="service-img">
+                    <div class="service-icon">🪙</div>
+                    <h3>Grosir & Reseller</h3>
+                    <p>Harga spesial untuk pembelian dalam jumlah banyak dan reseller</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="testimoni">
+            <h2 class="fade-in">Testimoni</h2>
+            <div class="testimonials">
+                <div class="testimonial-card fade-in stagger-1">
+                    <img src="3.png" alt="Customer" class="testimonial-img">
+                    <p>"Tas anyamannya berkualitas bagus sekali! Jahitannya rapi dan bahannya kuat. Sudah beli 3 kali dan selalu puas. Recommended banget!"</p>
+                </div>
+                <div class="testimonial-card fade-in stagger-2">
+                    <img src="2.png" alt="Customer" class="testimonial-img">
+                    <p>"Pelayanan ramah dan pengiriman cepat. Tas custom yang saya pesan sesuai dengan ekspektasi. Terima kasih!"</p>
+                </div>
+                <div class="testimonial-card fade-in stagger-3">
+                    <img src="1.jpg" alt="Customer" class="testimonial-img">
+                    <p>"Saya jual lagi tas-tas dari sini dan pembeli selalu puas. Kualitas oke, harga bersahabat. Partner bisnis yang terpercaya!"</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="kontak">
+            <h2 class="fade-in">Hubungi Kami</h2>
+            <h3 style="text-align: center; margin-bottom: 2rem;">Shop Collection Now!</h3>
+            <div class="contact-form scale-in">
+                <a href="https://wa.me/6285649108190" target="_blank" class="btn">
+                    <svg style="width: 24px; height: 24px; vertical-align: middle; margin-right: 8px;" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+                    </svg>
+                    Hubungi Kami
+                </a>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>Ayoodya Bag</h4>
+                <p>Tas Anyaman Plastik Berkelanjutan. Cerita budaya dalam setiap anyaman.</p>
+            </div>
+            
+            <div class="footer-section">
+                <h4>Link Cepat</h4>
+                <ul class="footer-links">
+                    <li><a href="#beranda">Beranda</a></li>
+                    <li><a href="#tentang">Tentang Kami</a></li>
+                    <li><a href="#layanan">Layanan</a></li>
+                    <li><a href="#testimoni">Testimoni</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h4>Informasi</h4>
+                <ul class="footer-links">
+                    <li><a href="kebijakanprivasi.html">Kebijakan Privasi</a></li>
+                    <li><a href="syaratlayanan.html">Syarat & Layanan</a></li>
+                    <li><a href="#kontak">Hubungi Kami</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h4>Ikuti Kami</h4>
+                <div class="social-links">
+                    <a href="https://www.instagram.com/ayoodya_official/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                        </svg>
+                    </a>
+                    <a href="https://www.tiktok.com/@ayoodya_official" target="_blank" rel="noopener noreferrer" aria-label="TikTok">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z"/>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>&copy; 2025 Ayoodya Bag. Semua Hak Dilindungi.</p>
+            <p>Centra Tas Anyaman | Buatan Indonesia</p>
+        </div>
+    </footer>
+
+    <script>
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('show');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in, .slide-left, .slide-right, .scale-in').forEach(el => {
+            observer.observe(el);
+        });
+
+        setTimeout(() => {
+            document.querySelectorAll('.hero .fade-in').forEach(el => {
+                el.classList.add('show');
+            });
+        }, 100);
+    </script>
+</body>
+</html>
